@@ -1,3 +1,2 @@
 ﻿  KeyboardTrain.cpp
-C:\Users\Feedok\source\repos\KeyboardTrain\KeyboardTrain\KeyboardTrain.cpp(87,41): error C2440: =: невозможно преобразовать "std::string" в "const char *const "
-C:\Users\Feedok\source\repos\KeyboardTrain\KeyboardTrain\KeyboardTrain.cpp(87,28): message : Для выполнения данного преобразования нет доступного оператора преобразования, определенного пользователем, или вызов оператора невозможен
+  KeyboardTrain.vcxproj -> C:\Users\Feedok\source\repos\KeyboardTrain\Debug\KeyboardTrain.exe

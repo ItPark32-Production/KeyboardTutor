@@ -17,7 +17,7 @@ bool isNewSpeedTest = true;
 const int N = 13;           // Кол-во слов (нужно для словаря и проверки скорости).
 const int MAX_LEN = 255;    // Макс. длинна строки
 
-const char* const DICTONARY[N] = {      // Словарь слов которые будут использованны в проверке скорости.
+const char* const DICTONARY[N]= {      // Словарь слов которые будут использованны в проверке скорости.
     "University",
     "Book",
     "Test",
@@ -34,8 +34,8 @@ const char* const DICTONARY[N] = {      // Словарь слов которы�
 };
 
 int random;  
-int score = 0;          // Счётчик слов которые введены верно
-const float secs = 20;  // Ожидание 20 секунд перед концом цикла
+int rightwrittedWords = 0;          // Счётчик слов которые введены верно
+const float secs = 10;  // Ожидание 60 секунд перед концом цикла
 char word[N] = "";      // Вводимое слово
 
 const float delay = secs * CLOCKS_PER_SEC; // Вычисление задержки через константу CLOCK_PER_SEC
@@ -105,25 +105,21 @@ void checkSpeed()    // Функция проверки скорости наб�
     clock_t start = clock();
 
     while (clock() - start < delay) {
-        random = rand() % N;                        //  Случайное число, индекс
+        random = rand() % N;                        //Случайное число, индекс
         cout << "input word:\t " << DICTONARY[random] << '\n';
         cin.getline(word, MAX_LEN);
         if (strcmp(word, DICTONARY[random]) == 0) {
-            score++;                               //   Если слова введены верно, наращиваем счётчик
-            cout << score << '\n';
+            rightwrittedWords++; //Если слова введены верно, наращиваем счётчик
+            cout << rightwrittedWords << '\n';
         }
     }
 
-    cout << "\nCorrectly writted : " << score;
-    cout << "\nCount of words" << N;
-    if (newTypingSpeed == -1)
-    {
-        typingSpeed = N / secs;
-    }
-    else
-    {
-        newTypingSpeed = N / secs;
-    }
+    cout << "\nCorrectly writted : " << rightwrittedWords;
+    cout << "\nCount of words : " << N;
+    cout << "\nYour speed " << N / secs << " words per minute \n";
+    
+
+
 }
 
 #pragma endregion
@@ -183,14 +179,14 @@ int main()
         }
     }
 
-    
 
     
-    std::cout << "Welcome! Lets check your speed for the first time";
+    std::cout << "Welcome! Lets check your speed for the first time \n";
     checkSpeed();
     isNewSpeedTest = false;
 
-    std::cout << "Good job! Welcome to the program";
+    std::cout << "Good job! Welcome to the program ";
+    system("wait");
     menu();
 
     
