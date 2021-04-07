@@ -1,4 +1,3 @@
 ﻿  KeyboardTrain.cpp
-C:\Users\Feedok\source\repos\KeyboardTrain\KeyboardTrain\KeyboardTrain.cpp(92,25): warning C4244: =: преобразование "float" в "int", возможна потеря данных
-C:\Users\Feedok\source\repos\KeyboardTrain\KeyboardTrain\KeyboardTrain.cpp(96,28): warning C4244: =: преобразование "float" в "int", возможна потеря данных
-  KeyboardTrain.vcxproj -> C:\Users\Feedok\source\repos\KeyboardTrain\Debug\KeyboardTrain.exe
+C:\Users\Feedok\source\repos\KeyboardTrain\KeyboardTrain\KeyboardTrain.cpp(87,41): error C2440: =: невозможно преобразовать "std::string" в "const char *const "
+C:\Users\Feedok\source\repos\KeyboardTrain\KeyboardTrain\KeyboardTrain.cpp(87,28): message : Для выполнения данного преобразования нет доступного оператора преобразования, определенного пользователем, или вызов оператора невозможен
