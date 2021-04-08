@@ -116,7 +116,7 @@ void checkSpeed()    // Функция проверки скорости наб�
 
     cout << "\nCorrectly writted : " << rightwrittedWords;
     cout << "\nCount of words : " << N;
-    cout << "\nYour speed " << N / secs << " words per minute \n";
+    cout << "\nYour speed " << rightwrittedWords / secs << " words per minute \n";
     
 
 
@@ -134,21 +134,29 @@ void menuChecker()      // Функция для проверки выбора �
     switch (chooseMenu)
     {
     case 1:
-        cout << "1";
+        checkSpeed();
+        menu();
+        break;
     case 2:
         cout << "1";
+        menu();
+        break;
     case 3:
         cout << "2";
+        menu();
+        break;
+    case 4:
+        system("exit");
     }
 }
 
 void menu()
 {
-    clearScreen();
 
     std::cout << "1. Check your speed" << "\n";
     std::cout << "2. Train symbols" << "\n";
-    std::cout << "3. Exit" << "\n";
+    std::cout << "3. Clear screen" << "\n";
+    std::cout << "4. Exit" << "\n";
     std::cin >> chooseMenu;
     menuChecker();
 }
@@ -185,8 +193,8 @@ int main()
     checkSpeed();
     isNewSpeedTest = false;
 
-    std::cout << "Good job! Welcome to the program ";
-    system("wait");
+    std::cout << "Good job! Welcome to the program \n";
+    std::cout << "\n";
     menu();
 
     
