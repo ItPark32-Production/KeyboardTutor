@@ -157,14 +157,21 @@ void checkSpeedWords()    // Функция проверки скорости н
     clock_t start = clock();    // Таймер, запоминание времени с момента запуска функции
 
     while (clock() - start < delay) {               
-        random = rand() % DICT_SIZE_WORDS;                        //Случайное число, индекс
+        random = rand() % DICT_SIZE_WORDS;                        // Случайное число, индекс
+        clearScreen();
+        cout << "Count of correctly writted words : " << rightwrittedWords << '\n';
         cout << "Please write : \t" << DICTONARY_OF_WORDS[random] << '\n';   // Вывод : какое слово нам надо ввести
         cin.getline(word, MAX_LEN);
-        if (strcmp(word, DICTONARY_OF_WORDS[random]) == 0) {
-            rightwrittedWords++;                    //Если слова введены верно, наращиваем счётчик
-            cout << "\n";
-            cout << "Count of correctly writted words : " << rightwrittedWords << '\n';
-            cout << "\n";
+        if (strcmp("EXIT",word) != 0)
+        {
+            if (strcmp(word, DICTONARY_OF_WORDS[random]) == 0) {
+                rightwrittedWords++;                    // Если слова введены верно, наращиваем счётчик
+                cout << "\n";
+            }
+        }
+        else
+        {
+            break;
         }
     }
 
@@ -174,14 +181,14 @@ void checkSpeedWords()    // Функция проверки скорости н
 
     cout << "\nCorrectly writted : " << rightwrittedWords;
     cout << "\nCount of words : " << DICT_SIZE_WORDS;
-    cout << "\nYour speed " << newTypingSpeed << " words per minute";
+    cout << "\nYour speed " << newTypingSpeed << " words per minute" << "\n";
     if (typingSpeed != 0)
     {
         if (newTypingSpeed > typingSpeed)
         {
             float newPercent = (100 * newTypingSpeed) / typingSpeed;
             profitPercent = newPercent - 100;   
-            cout << "\nNew record! You're improved your speed by " << profitPercent << " %\n";
+            cout << "New record! You're improved your speed by " << profitPercent << " %\n";
             typingSpeed = newTypingSpeed;
         }
     }
@@ -189,7 +196,7 @@ void checkSpeedWords()    // Функция проверки скорости н
     {
         typingSpeed = newTypingSpeed;
     }
-
+    system("pause");
 }   
 
 void checkSpeedSymbols()    // Функция проверки скорости набора
@@ -204,13 +211,20 @@ void checkSpeedSymbols()    // Функция проверки скорости 
     while (clock() - start < delay) {
         randomSymbol = rand() % DICT_SIZE_SYMBOLS; 
         cout << randomSymbol;//Случайное число, индекс
+        clearScreen();
+        cout << "Count of correctly writted symbols : " << rightwrittedSymbols << '\n';
         cout << "Please write : \t" << DICTONARY_OF_SYMBOLS[randomSymbol] << '\n';   // Вывод : какой символ нам надо ввести
         cin.getline(symbol, MAX_LEN);
-        if (strcmp(symbol, DICTONARY_OF_SYMBOLS[randomSymbol]) == 0) {
-            rightwrittedSymbols++;                    //Если слова введены верно, наращиваем счётчик
-            cout << "\n";
-            cout << "Count of correctly writted symbols : " << rightwrittedSymbols << '\n';
-            cout << "\n";
+        if (strcmp("EXIT", symbol) != 0)
+        {
+            if (strcmp(symbol, DICTONARY_OF_SYMBOLS[randomSymbol]) == 0) {
+                rightwrittedSymbols++;                    //Если слова введены верно, наращиваем счётчик
+                cout << "\n";
+            }
+        }
+        else
+        {
+            break;
         }
     }
 
@@ -235,6 +249,9 @@ void checkSpeedSymbols()    // Функция проверки скорости 
     {
         typingSpeedSymbols = newTypingSpeedSymbols;
     }
+
+    system("pause");
+    
 }
 
 #pragma endregion
@@ -245,38 +262,89 @@ void checkSpeedSymbols()    // Функция проверки скорости 
 
 void menu();
 
+
+
+void info()
+{
+
+    clearScreen();
+
+    cout << "Welcome to Keyboard Training" << "\n";
+    cout << "This is a console program, that was written on C++";
+    cout << "\n";
+    cout << "Menu info : " << "\n";
+    cout << "1 - This point can check your speed of writting words on keyboard" << "\n";
+    cout << "2 - This point can check your speed of keyboard orientation and special character set" << "\n";
+    cout << "3 - Suddenly if you need to clear your screen, this point can help you" << "\n";
+    cout << "4 - Exit" << "\n";
+    cout << "\n";
+    cout << "When you're already doing your test, you can always stop it. Just write 'EXIT' (capslock)" << "\n";
+}
+
+int exit()  // Проверка : готов ли пользователь выйти из нашей чудесной программы
+{
+    cout << "Are you want to exit? (Write YES or NO)\n";
+
+    for (; ; )
+    {
+        std::cin >> chooseStart;
+        if (chooseStart == "NO")
+        {
+            break;
+        }
+        else if (chooseStart == "YES")
+        {
+            clearScreen();
+            _exit(1);
+        }
+        else
+        {
+            std::cout << "Write YES or NO\n";
+            continue;
+        }
+    }
+}
+
 void menuChecker()      // Функция для проверки выбора в меню программы. Выполненна через switch case. Какую цифру пользователь введёт, в такой пункт меню и попадёт
                         // Реализованно за счёт получения цифры в переменную.
 {
     switch (chooseMenu)
     {
     case 1:
-        checkSpeedWords();
+        info();
+        system("pause");
         menu();
         break;
     case 2:
-        checkSpeedSymbols();
+        checkSpeedWords();
         menu();
         break;
     case 3:
-        clearScreen();
+        checkSpeedSymbols();
         menu();
         break;
     case 4:
-        system("exit");
+        clearScreen();
+        menu();
+    case 5:
+        exit();
+        menu(); // Сработает если пользоатель напишет NO
     }
 }
 
 void menu()
 {
-    std::cout << "\n";
-    std::cout << "1. Check your speed" << "\n";
-    std::cout << "2. Train symbols" << "\n";
-    std::cout << "3. Clear screen" << "\n";
-    std::cout << "4. Exit" << "\n";
-    std::cin >> chooseMenu;
+    
+    clearScreen();
+
+    cout << "1. Information" << "\n";
+    cout << "2. Check your speed" << "\n";
+    cout << "3. Train symbols" << "\n";
+    cout << "4. Clear screen" << "\n";
+    cout << "5. Exit" << "\n";
+    cin >> chooseMenu;
     menuChecker();
-    std::cout << "\n";
+    cout << "\n";
 }
 
 #pragma endregion
@@ -288,36 +356,8 @@ int main()
 
     // Приветстиве
 
-    std::cout << "Welcome to Keyboard Training\n";  
-
-    std::cout << "Lets check your speed for the first time \n";
-    checkSpeedWords();
-
-    isNewSpeedTest = false;
-
-    std::cout << "Are you want to continue? (Write YES or NO)\n";
-
-    // Проверка : готов ли пользователь начать использование
-    for (; ; )
-    {
-        std::cin >> chooseStart;
-        if (chooseStart == "NO")
-        {
-            return -1;
-        }
-        else if (chooseStart == "YES")
-        {
-            break;
-        }
-        else
-        {
-            std::cout << "Write YES or NO\n";
-            continue;
-        }
-    }
-
-    std::cout << "Good job! Welcome to the program \n";
-    std::cout << "\n";
+    cout << "Welcome to Keyboard Training\n";  
+    system("pause");
     menu();
     
     
