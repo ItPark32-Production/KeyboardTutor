@@ -19,9 +19,9 @@ string chooseStart;
 char word[DICT_SIZE_WORDS] = "";          // Вводимое слово
 char symbol[DICT_SIZE_SYMBOLS] = "";          // Вводимый символ
 
-int chooseMenu;             // Переменная для хранения выбора в меню
-int random;                 // Рандомайзер
-int randomSymbol;
+int chooseMenu = 0;             // Переменная для хранения выбора в меню
+int random = 0;                 // Рандомайзер
+int randomSymbol = 0;
 int rightwrittedWords = 0;  // Счётчик слов которые введены верно
 int profitPercent = 0;      // На сколько процентов улучшена скорость.
 
@@ -62,8 +62,8 @@ bool isNewSpeedTest = true;
     "(",
     ")",
     "|",
-    ".",
     "`",
+    "."
  };
 
 
@@ -190,7 +190,7 @@ void checkSpeedWords()    // Функция проверки скорости н
         typingSpeed = newTypingSpeed;
     }
 
-}
+}   
 
 void checkSpeedSymbols()    // Функция проверки скорости набора
 {
@@ -202,11 +202,12 @@ void checkSpeedSymbols()    // Функция проверки скорости 
     clock_t start = clock();    // Таймер, запоминание времени с момента запуска функции
 
     while (clock() - start < delay) {
-        randomSymbol = rand() % DICT_SIZE_SYMBOLS;                        //Случайное число, индекс
-        cout << "Please write : \t" << DICT_SIZE_SYMBOLS[randomSymbol] << '\n';   // Вывод : какое слово нам надо ввести
-        cin.getline(word, MAX_LEN);
-        if (strcmp(word, DICT_SIZE_SYMBOLS[randomSymbol]) == 0) {
-            rightwrittedWords++;                    //Если слова введены верно, наращиваем счётчик
+        randomSymbol = rand() % DICT_SIZE_SYMBOLS; 
+        cout << randomSymbol;//Случайное число, индекс
+        cout << "Please write : \t" << DICTONARY_OF_SYMBOLS[randomSymbol] << '\n';   // Вывод : какой символ нам надо ввести
+        cin.getline(symbol, MAX_LEN);
+        if (strcmp(symbol, DICTONARY_OF_SYMBOLS[randomSymbol]) == 0) {
+            rightwrittedSymbols++;                    //Если слова введены верно, наращиваем счётчик
             cout << "\n";
             cout << "Count of correctly writted symbols : " << rightwrittedSymbols << '\n';
             cout << "\n";
@@ -220,19 +221,19 @@ void checkSpeedSymbols()    // Функция проверки скорости 
     cout << "\nCorrectly writted : " << rightwrittedSymbols;
     cout << "\nCount of symbols : " << DICT_SIZE_SYMBOLS;
     cout << "\nYour speed " << newTypingSpeedSymbols << " symbols per minute";
-    if (typingSpeed != 0)
+    if (typingSpeedSymbols != 0)
     {
-        if (newTypingSpeed > typingSpeed)
+        if (newTypingSpeedSymbols > typingSpeedSymbols)
         {
-            float newPercent = (100 * newTypingSpeed) / typingSpeed;
+            float newPercent = (100 * newTypingSpeedSymbols) / typingSpeedSymbols;
             profitPercentSymbols = newPercent - 100;
-            cout << "\nNew record! You're improved your speed by " << profitPercent << " %\n";
+            cout << "\nNew record! You're improved your speed by " << profitPercentSymbols << " %\n";
             typingSpeedSymbols = newTypingSpeedSymbols;
         }
     }
     else
     {
-        typingSpeed = newTypingSpeed;
+        typingSpeedSymbols = newTypingSpeedSymbols;
     }
 }
 
@@ -254,12 +255,12 @@ void menuChecker()      // Функция для проверки выбора �
         menu();
         break;
     case 2:
-        cout << "1";
+        checkSpeedSymbols();
         menu();
         break;
     case 3:
-        cout << "2";
         clearScreen();
+        menu();
         break;
     case 4:
         system("exit");

@@ -2,8 +2,5 @@
 C:\Users\Feedok\source\repos\KeyboardTrain\KeyboardTrain\KeyboardTrain.cpp(153,15): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
 C:\Users\Feedok\source\repos\KeyboardTrain\KeyboardTrain\KeyboardTrain.cpp(183,40): warning C4244: =: преобразование "float" в "int", возможна потеря данных
 C:\Users\Feedok\source\repos\KeyboardTrain\KeyboardTrain\KeyboardTrain.cpp(198,15): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
-C:\Users\Feedok\source\repos\KeyboardTrain\KeyboardTrain\KeyboardTrain.cpp(206,70): error C2109: для индекса требуется массив или указатель
-C:\Users\Feedok\source\repos\KeyboardTrain\KeyboardTrain\KeyboardTrain.cpp(208,12): error C2109: для индекса требуется массив или указатель
-C:\Users\Feedok\source\repos\KeyboardTrain\KeyboardTrain\KeyboardTrain.cpp(208,12): error C2660: strcmp: функция не принимает 1 аргументов
-C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\string.h(100,13): message : см. объявление "strcmp"
-C:\Users\Feedok\source\repos\KeyboardTrain\KeyboardTrain\KeyboardTrain.cpp(228,47): warning C4244: =: преобразование "float" в "int", возможна потеря данных
+C:\Users\Feedok\source\repos\KeyboardTrain\KeyboardTrain\KeyboardTrain.cpp(229,47): warning C4244: =: преобразование "float" в "int", возможна потеря данных
+  KeyboardTrain.vcxproj -> C:\Users\Feedok\source\repos\KeyboardTrain\Debug\KeyboardTrain.exe
