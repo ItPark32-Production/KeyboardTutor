@@ -16,7 +16,6 @@ const float delay = secs * CLOCKS_PER_SEC; // Вычисление задерж�
 
 string chooseStart;
 
-char word[DICT_SIZE_WORDS] = "";          // Вводимое слово
 char symbol[DICT_SIZE_SYMBOLS] = "";          // Вводимый символ
 
 int chooseMenu = 0;             // Переменная для хранения выбора в меню
@@ -34,22 +33,6 @@ float typingSpeedSymbols = 0;
 float newTypingSpeedSymbols = 0;
 
 bool isNewSpeedTest = true;
-
- const char* const DICTONARY_OF_WORDS[DICT_SIZE_WORDS]= {      // Словарь слов которые будут использованны в проверке скорости.
-    "University",
-    "Book",
-    "Test",
-    "Coding",
-    "Programming",
-    "Queen",
-    "Beat",
-    "City",
-    "School",
-    "Thing",
-    "Snake",
-    "Sharp",
-    "Read"
-};
 
  const char* const DICTONARY_OF_SYMBOLS[DICT_SIZE_SYMBOLS] = {      // Символы слов которые будут использованны в проверке скорости.
     "!",
@@ -91,55 +74,34 @@ int countLinesInFile()  // Функция для подсчёта кол-ва с
     return i;
 }
 
-/*
-int readFile() // Открытие словаря и добавления каждого слова в словарь. Работает с библеотекой fstream TODO: Доделать
+
+string readFile() // Открытие словаря и добавления каждого слова в словарь. Работает с библеотекой fstream TODO: Доделать
 {
     string path = "dict.txt";
+     string currentString;
     
     ifstream filein;
     filein.open(path);
 
     if (!filein.is_open())
     {
-        cout << "Cant open dictionary";
+        cout << "Cant open directory";
     }
     else
     {
-        cout << "Opened";
-
-        string currentString;
-
         const int N = 46000;
-        char* DICTONARY[N];
-        
-        while (!filein.eof())
+        random = rand() % N;
+        for (int i = 0; i < random; i++)
         {
-            currentString = "";
             getline(filein, currentString);
-            char currentChar;
-
-            
-        
-            for (int i = 0; i < 10; i++)
-            {
-                for (int j = 0; j < currentString.length(); j++)
-                {
-                    currentChar = currentString[j];
-                    DICTONARY[i] += currentChar;
-                }
-
-                
-
-            }
-            
         }
-        filein.close();
-        cout << DICTONARY[1];
-    }
 
-    return 0;
+    }
+    filein.close();
+
+    return currentString;
 }
-*/
+
 
 #pragma endregion
 
@@ -158,15 +120,16 @@ void checkSpeedWords()    // Функция проверки скорости н
 
     while (clock() - start < delay) {               
         random = rand() % DICT_SIZE_WORDS;                        // Случайное число, индекс
+        string currentWord = readFile();
+        string inputWord;
         clearScreen();
-        cout << "Count of correctly writted words : " << rightwrittedWords << '\n';
-        cout << "Please write : \t" << DICTONARY_OF_WORDS[random] << '\n';   // Вывод : какое слово нам надо ввести
-        cin.getline(word, MAX_LEN);
-        if (strcmp("EXIT",word) != 0)
+        cout << "Count of correctly writted words : " << rightwrittedWords << '\n'; 
+        cout << "Please write : \t" << currentWord << '\n';   // Вывод : какое слово нам надо ввести
+        cin >> inputWord;   // Ввод слова от пользователя
+        if ("EXIT" != inputWord)
         {
-            if (strcmp(word, DICTONARY_OF_WORDS[random]) == 0) {
+            if (inputWord == currentWord) {
                 rightwrittedWords++;                    // Если слова введены верно, наращиваем счётчик
-                cout << "\n";
             }
         }
         else
@@ -336,6 +299,8 @@ void menu()
 {
     
     clearScreen();
+
+    readFile();
 
     cout << "1. Information" << "\n";
     cout << "2. Check your speed" << "\n";
