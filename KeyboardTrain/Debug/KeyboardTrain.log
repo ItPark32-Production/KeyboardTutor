@@ -1,7 +1,7 @@
 ﻿  KeyboardTrain.cpp
-C:\Users\Feedok\source\repos\KeyboardTrain\KeyboardTrain\KeyboardTrain.cpp(115,15): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
+C:\Users\Feedok\source\repos\KeyboardTrain\KeyboardTrain\KeyboardTrain.cpp(119,15): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
 C:\Users\Feedok\source\repos\KeyboardTrain\KeyboardTrain\KeyboardTrain.cpp(153,40): warning C4244: =: преобразование "float" в "int", возможна потеря данных
-C:\Users\Feedok\source\repos\KeyboardTrain\KeyboardTrain\KeyboardTrain.cpp(168,15): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
-C:\Users\Feedok\source\repos\KeyboardTrain\KeyboardTrain\KeyboardTrain.cpp(206,47): warning C4244: =: преобразование "float" в "int", возможна потеря данных
-C:\Users\Feedok\source\repos\KeyboardTrain\KeyboardTrain\KeyboardTrain.cpp(269): warning C4715: exit: значение возвращается не при всех путях выполнения
+C:\Users\Feedok\source\repos\KeyboardTrain\KeyboardTrain\KeyboardTrain.cpp(197,15): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
+C:\Users\Feedok\source\repos\KeyboardTrain\KeyboardTrain\KeyboardTrain.cpp(261,47): warning C4244: =: преобразование "float" в "int", возможна потеря данных
+C:\Users\Feedok\source\repos\KeyboardTrain\KeyboardTrain\KeyboardTrain.cpp(357): warning C4715: exit: значение возвращается не при всех путях выполнения
   KeyboardTrain.vcxproj -> C:\Users\Feedok\source\repos\KeyboardTrain\Debug\KeyboardTrain.exe

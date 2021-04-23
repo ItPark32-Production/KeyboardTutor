@@ -8,11 +8,11 @@
 
 using namespace std;
 
-const int DICT_SIZE_WORDS = 13;           // Кол-во слов (нужно для словаря и проверки скорости).
 const int DICT_SIZE_SYMBOLS = 12;           // Кол-во символов (нужно для словаря и проверки скорости).
 const int MAX_LEN = 255;    // Макс. длинна строки
-const float secs = 10;      // Ожидание 60 секунд перед концом цикла
+float secs = 15;      // Ожидание 60 секунд перед концом цикла
 const float delay = secs * CLOCKS_PER_SEC; // Вычисление задержки через константу CLOCK_PER_SEC, которая содержит в себе количество системных едениц времени в секунду.
+const int N = 46000;
 
 string chooseStart;
 
@@ -31,6 +31,12 @@ float typingSpeed = 0;
 float newTypingSpeed = 0;
 float typingSpeedSymbols = 0;
 float newTypingSpeedSymbols = 0;
+float bestTypingSpeed15Secs = 0;
+float bestTypingSpeed30Secs = 0;
+float bestTypingSpeed60Secs = 0;
+float bestTypingSpeedSymbols15Secs = 0;
+float bestTypingSpeedSymbols30Secs = 0;
+float bestTypingSpeedSymbols60Secs = 0;
 
 bool isNewSpeedTest = true;
 
@@ -74,7 +80,6 @@ int countLinesInFile()  // Функция для подсчёта кол-ва с
     return i;
 }
 
-
 string readFile() // Открытие словаря и добавления каждого слова в словарь. Работает с библеотекой fstream TODO: Доделать
 {
     string path = "dict.txt";
@@ -89,7 +94,6 @@ string readFile() // Открытие словаря и добавления к�
     }
     else
     {
-        const int N = 46000;
         random = rand() % N;
         for (int i = 0; i < random; i++)
         {
@@ -115,16 +119,19 @@ void checkSpeedWords()    // Функция проверки скорости н
     srand(time(0));
     
     rightwrittedWords = 0; // Обнуляем счётчик
-
+    int summaryWords = 0;
     clock_t start = clock();    // Таймер, запоминание времени с момента запуска функции
 
     while (clock() - start < delay) {               
-        random = rand() % DICT_SIZE_WORDS;                        // Случайное число, индекс
+        
+        random = rand() % (46000 - 1+1) + 1;                        // Случайное число, индекс
         string currentWord = readFile();
         string inputWord;
+   
         clearScreen();
         cout << "Count of correctly writted words : " << rightwrittedWords << '\n'; 
         cout << "Please write : \t" << currentWord << '\n';   // Вывод : какое слово нам надо ввести
+        summaryWords++;
         cin >> inputWord;   // Ввод слова от пользователя
         if ("EXIT" != inputWord)
         {
@@ -138,20 +145,12 @@ void checkSpeedWords()    // Функция проверки скорости н
         }
     }
 
-    // Итоги
-
-    newTypingSpeed = rightwrittedWords / secs;
-
-    cout << "\nCorrectly writted : " << rightwrittedWords;
-    cout << "\nCount of words : " << DICT_SIZE_WORDS;
-    cout << "\nYour speed " << newTypingSpeed << " words per minute" << "\n";
     if (typingSpeed != 0)
     {
         if (newTypingSpeed > typingSpeed)
         {
             float newPercent = (100 * newTypingSpeed) / typingSpeed;
-            profitPercent = newPercent - 100;   
-            cout << "New record! You're improved your speed by " << profitPercent << " %\n";
+            profitPercent = newPercent - 100;
             typingSpeed = newTypingSpeed;
         }
     }
@@ -159,6 +158,36 @@ void checkSpeedWords()    // Функция проверки скорости н
     {
         typingSpeed = newTypingSpeed;
     }
+
+    // Итоги
+
+    newTypingSpeed = rightwrittedWords / secs;
+
+    cout << "\nCorrectly writted : " << rightwrittedWords;
+    cout << "\nCount of words : " << summaryWords;
+    cout << "\nYour speed " << newTypingSpeed << " words per " << secs << " secs" << "\n";
+    if (secs == 15)
+    {
+        if (newTypingSpeed > bestTypingSpeed15Secs)
+        {
+            bestTypingSpeed15Secs = newTypingSpeed;
+        }
+    }
+    else if (secs == 30)
+    {
+        if (newTypingSpeed > bestTypingSpeed30Secs)
+        {
+            bestTypingSpeed30Secs = newTypingSpeed;
+        }
+    }
+    else if (secs == 60)
+    {
+        if (newTypingSpeed > bestTypingSpeed60Secs)
+        {
+            bestTypingSpeed60Secs = newTypingSpeed;
+        }
+    }
+
     system("pause");
 }   
 
@@ -168,15 +197,16 @@ void checkSpeedSymbols()    // Функция проверки скорости 
     srand(time(0));
 
     rightwrittedSymbols = 0; // Обнуляем счётчик
-
+    int summarySymbols = 0;
     clock_t start = clock();    // Таймер, запоминание времени с момента запуска функции
 
     while (clock() - start < delay) {
         randomSymbol = rand() % DICT_SIZE_SYMBOLS; 
-        cout << randomSymbol;//Случайное число, индекс
+        cout << randomSymbol;   //Случайное число, индекс
         clearScreen();
         cout << "Count of correctly writted symbols : " << rightwrittedSymbols << '\n';
         cout << "Please write : \t" << DICTONARY_OF_SYMBOLS[randomSymbol] << '\n';   // Вывод : какой символ нам надо ввести
+        summarySymbols++;
         cin.getline(symbol, MAX_LEN);
         if (strcmp("EXIT", symbol) != 0)
         {
@@ -191,20 +221,44 @@ void checkSpeedSymbols()    // Функция проверки скорости 
         }
     }
 
+
+
     // Итоги
 
     newTypingSpeedSymbols = rightwrittedSymbols / secs;
 
     cout << "\nCorrectly writted : " << rightwrittedSymbols;
-    cout << "\nCount of symbols : " << DICT_SIZE_SYMBOLS;
+    cout << "\nCount of symbols : " << summarySymbols;
     cout << "\nYour speed " << newTypingSpeedSymbols << " symbols per minute";
+
+    if (secs == 15)
+    {
+        if (newTypingSpeedSymbols > bestTypingSpeedSymbols15Secs)
+        {
+            bestTypingSpeedSymbols15Secs = newTypingSpeedSymbols;
+        }
+    }
+    else if (secs == 30)
+    {
+        if (newTypingSpeedSymbols > bestTypingSpeedSymbols30Secs)
+        {
+            bestTypingSpeedSymbols30Secs = newTypingSpeedSymbols;
+        }
+    }
+    else if (secs == 60)
+    {
+        if (newTypingSpeedSymbols > bestTypingSpeedSymbols60Secs)
+        {
+            bestTypingSpeedSymbols60Secs = newTypingSpeedSymbols;
+        }
+    }
+
     if (typingSpeedSymbols != 0)
     {
         if (newTypingSpeedSymbols > typingSpeedSymbols)
         {
             float newPercent = (100 * newTypingSpeedSymbols) / typingSpeedSymbols;
             profitPercentSymbols = newPercent - 100;
-            cout << "\nNew record! You're improved your speed by " << profitPercentSymbols << " %\n";
             typingSpeedSymbols = newTypingSpeedSymbols;
         }
     }
@@ -217,11 +271,44 @@ void checkSpeedSymbols()    // Функция проверки скорости 
     
 }
 
+
+
 #pragma endregion
 
 
 
 #pragma region Menu
+
+void chooseTime()
+{
+    cout << "\nChoose test time" << "\n";
+    cout << "1. 15 secs" << "\n";
+    cout << "2. 30 secs" << "\n";
+    cout << "3. 60 secs";
+    cout << "\n";
+    cin >> chooseMenu;
+
+    if (chooseMenu < 4 and chooseMenu > 0)
+    {
+        switch (chooseMenu)
+        {
+        case 1:
+            secs = 15;
+            break;
+        case 2:
+            secs = 30;
+            break;
+        case 3:
+            secs = 60;
+            break;
+        }
+    }
+    else
+    {
+        cout << "Incorrect menu point";
+    }
+
+}
 
 void menu();
 
@@ -236,10 +323,11 @@ void info()
     cout << "This is a console program, that was written on C++";
     cout << "\n";
     cout << "Menu info : " << "\n";
-    cout << "1 - This point can check your speed of writting words on keyboard" << "\n";
-    cout << "2 - This point can check your speed of keyboard orientation and special character set" << "\n";
-    cout << "3 - Suddenly if you need to clear your screen, this point can help you" << "\n";
-    cout << "4 - Exit" << "\n";
+    cout << "2 - This point can check your speed of writting words on keyboard" << "\n";
+    cout << "3 - This point can check your speed of keyboard orientation and special character set" << "\n";
+    cout << "4 - Your global statistic" << "\n";
+    cout << "5 - Suddenly if you need to clear your screen, this point can help you" << "\n";
+    cout << "6 - Exit" << "\n";
     cout << "\n";
     cout << "When you're already doing your test, you can always stop it. Just write 'EXIT' (capslock)" << "\n";
 }
@@ -268,36 +356,81 @@ int exit()  // Проверка : готов ли пользователь вы�
     }
 }
 
+void stats()
+{
+    clearScreen();
+    cout << "\nWORDS TRAINING STATISTIC \n";
+    cout << "\n";
+    cout << "Your previous words typing speed : " << newTypingSpeed << "\n";
+    cout << "Your best words typing speed per 15 secs : " << bestTypingSpeed15Secs << "\n";
+    cout << "Your best words typing speed per 30 secs : " << bestTypingSpeed30Secs << "\n";
+    cout << "Your best words typing speed per 60 secs : " << bestTypingSpeed60Secs << "\n";
+    if (profitPercent > 0)
+    {
+        cout << "New record! You're improved your speed by " << profitPercent << " %\n";
+    }
+
+    cout << "\n";
+
+    cout << "\nSYMBOLS TRAINING STATISTIC \n";
+    cout << "\n";
+    cout << "Your previous symbols typing speed : " << newTypingSpeedSymbols << "\n";
+    cout << "Your best words typing speed per 15 secs : " << bestTypingSpeedSymbols15Secs << "\n";
+    cout << "Your best words typing speed per 30 secs : " << bestTypingSpeedSymbols30Secs << "\n";
+    cout << "Your best words typing speed per 60 secs : " << bestTypingSpeedSymbols60Secs << "\n";
+    if (profitPercentSymbols > 0)
+    {
+        cout << "\nNew record! You're improved your speed by " << profitPercentSymbols << " %\n";
+    }
+
+}
+
 void menuChecker()      // Функция для проверки выбора в меню программы. Выполненна через switch case. Какую цифру пользователь введёт, в такой пункт меню и попадёт
                         // Реализованно за счёт получения цифры в переменную.
 {
-    switch (chooseMenu)
+    if (chooseMenu < 7 and chooseMenu > 0)
     {
-    case 1:
-        info();
-        system("pause");
-        menu();
-        break;
-    case 2:
-        checkSpeedWords();
-        menu();
-        break;
-    case 3:
-        checkSpeedSymbols();
-        menu();
-        break;
-    case 4:
-        clearScreen();
-        menu();
-    case 5:
-        exit();
-        menu(); // Сработает если пользоатель напишет NO
+        switch (chooseMenu)
+        {
+        case 1:
+            info();
+            std::system("pause");
+            menu();
+            break;
+        case 2:
+            chooseTime();
+            checkSpeedWords();
+            menu();
+            break;
+        case 3:
+            chooseTime();
+            checkSpeedSymbols();
+            menu();
+            break;
+        case 4:
+            stats();
+            system("pause");
+            menu();
+        case 5:
+            clearScreen();
+            menu();
+        case 6:
+            exit();
+            menu(); // Сработает если пользоатель напишет NO
+        }
     }
+    else
+    {
+        menu();
+    }
+
 }
 
 void menu()
 {
     
+    chooseMenu = 0;
+
     clearScreen();
 
     readFile();
@@ -305,8 +438,9 @@ void menu()
     cout << "1. Information" << "\n";
     cout << "2. Check your speed" << "\n";
     cout << "3. Train symbols" << "\n";
-    cout << "4. Clear screen" << "\n";
-    cout << "5. Exit" << "\n";
+    cout << "4. Your statisitc" << "\n";
+    cout << "5. Clear screen" << "\n";
+    cout << "6. Exit" << "\n";
     cin >> chooseMenu;
     menuChecker();
     cout << "\n";
@@ -324,11 +458,6 @@ int main()
     cout << "Welcome to Keyboard Training\n";  
     system("pause");
     menu();
-    
-    
-    
-
-    
 
 }
 
